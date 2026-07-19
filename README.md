@@ -1,29 +1,106 @@
-# TinyC-Compiler
-Compiler for the TinyC language from the lexical-analysis to  target-code-generation
+<div align="center">
+  <img src="docs/assets/icon.svg" width="132" alt="Syntax tree descending into assembly lines" />
 
-Every TinyC program has an optional global declarations followed by one or more functions and one function must be main.
+# TinyC Compiler from Scratch
 
-Every TinyC function has zero or more TinyC statements
+**Two C++ compiler snapshots that trace a small C-like language from Lex/Yacc parsing to intermediate and SPIM target code.**
 
-Every TinyC statement is any of the following, an assignment statement, a control flow statement, a return statement, a declaration statement, a TinyC print statement
-![tc_2](https://user-images.githubusercontent.com/93820457/202493632-afda1dd4-9662-4cf2-934e-5a893ef9e296.png)
+[![C++](https://img.shields.io/badge/source-C%2B%2B-00599C?logo=cplusplus&logoColor=white)](#implementation-map)
+[![Lex + Yacc](https://img.shields.io/badge/front%20end-Lex%20%2B%20Yacc-a75b42.svg)](#quick-start)
+[![Status: educational](https://img.shields.io/badge/status-educational-d2aa58.svg)](#scope-and-limitations)
 
-#Compilation:\
--> Lexical analysis\
--> Syntax Analysis\
--> Semantic Analysis <br />
--> Intermediate code generation\
--> Code Optimization\
--> Code generation
+[Quick start](#quick-start) · [Language](#supported-language) · [Architecture](#architecture) · [Outputs](#cli-and-outputs) · [Limitations](#scope-and-limitations)
 
-#Interpretation:\
--> Lexical analysis \
--> Syntax Analysis \
--> Semantic Analysis \
--> Evaluate statements
+</div>
 
-![tc_1](https://user-images.githubusercontent.com/93820457/202493598-77a76e1a-3783-48ba-98a2-f3037782dcda.png)
+<div align="center">
+  <img src="docs/assets/cover.svg" width="900" alt="TinyC compiler construction cover" />
+</div>
 
-Intermediate code generation is an important phase in the compiler design process. It is the step that comes after the syntax analysis phase, in which the source code is parsed and the abstract syntax tree (AST) is constructed. The intermediate code generation phase takes the AST as input and generates a form of code that is easier for the compiler to work with than the original source code. This intermediate code, also known as intermediate representation (IR), is then passed on to the next phase of the compiler, which is typically code optimization and code generation.
+## What is it?
 
-It takes the AST as input and generates a form of code that is more suitable for the next phase of the compiler to work with. There are various forms of intermediate code, each with its own advantages and disadvantages. The example code above provides an example of an intermediate code generation system for an AST, using a three-address code approach. The choice of intermediate code representation can have a significant impact on the performance of the compiler, and it is a trade-off between the ease of generation and the efficiency of the final machine code.
+This repository contains two independent stages of an educational TinyC compiler. Both implement a scanner, parser, abstract syntax tree, program/function model, and symbol table. One snapshot emphasizes three-address intermediate code; the other adds register and MIPS/SPIM code generation.
+
+The projects are source archives rather than a single versioned compiler. Generated Lex/Yacc files, object files, executables, and sample outputs are committed alongside the handwritten sources.
+
+## Quick start
+
+Prerequisites on a Unix-like system:
+
+- C++ compiler and Make
+- Lex/Flex plus its runtime library
+- Yacc/Bison plus its runtime library
+
+### Generate intermediate code
+
+```bash
+cd intermediate-code-generation
+make
+./tinyC -ic test1.tc
+```
+
+The command writes `test1.tc.ic`. A checked-in example is available at [`test1.tc.ic`](intermediate-code-generation/test1.tc.ic).
+
+### Generate SPIM target code
+
+```bash
+cd target-code-generation
+make
+./tinyC -compile test1.tc
+```
+
+The command writes `test1.tc.spim`. Compare it with the checked-in [`sample output`](target-code-generation/test1.tc.spim).
+
+If your platform exposes `flex`/`bison` but not the traditional `lex`/`yacc` commands or libraries, adjust the directory makefile locally.
+
+## Supported language
+
+The committed Level-2 grammar describes a deliberately small language:
+
+- `int main()` program shape
+- local `int` and `double` declarations
+- integer and double constants
+- assignments and arithmetic `+ - * / %`
+- relational and logical expressions
+- `if` / `else`
+- `print` statements
+- `return 0`
+
+See [`BNFGrammar_ Level-2(TinyC-simple-integer-assignments-operators).txt`](intermediate-code-generation/BNFGrammar_%20Level-2%28TinyC-simple-integer-assignments-operators%29.txt) for the repository’s grammar reference.
+
+## Architecture
+
+![Architecture diagram showing TinyC source flowing through Lex, Yacc, AST and symbol-table stages before branching into three-address IR and MIPS SPIM output](docs/assets/architecture.svg)
+
+## Implementation map
+
+| Concern | Intermediate-code snapshot | Target-code snapshot |
+| --- | --- | --- |
+| Scanner / parser | `tiny.l`, `tiny.y` | `tiny.l`, `tiny.y` |
+| Semantic structures | `ast.*`, `program.*`, `Function.*`, `symboltable.*` | Same core structure |
+| Additional stage | `IntermediateCode.*` | `Register.*`, `codegeneration.*`, `machinedescription.*` |
+| Sample output | `.ic` | `.spim` |
+
+## CLI and outputs
+
+The generated `tinyC` programs expose options implemented in `tiny.y`:
+
+| Option | Purpose |
+| --- | --- |
+| `-toks <file.tc>` | Write token output |
+| `-ast <file.tc>` | Write the abstract syntax tree |
+| `-symtab <file.tc>` | Write the symbol table |
+| `-ic <file.tc>` | Write intermediate code; available in the intermediate snapshot |
+| `-compile <file.tc>` | Write SPIM code |
+
+Running with only the source path parses and prints diagnostic structures according to the selected snapshot.
+
+## Scope and limitations
+
+- This is an educational compiler subset, not a conforming C compiler.
+- The two directories duplicate front-end code and should be treated as separate snapshots.
+- No standalone optimization pass is present, so the README does not claim code optimization.
+- Build scripts assume Unix tools and link with `-ll` and `-ly`.
+- Generated parser/scanner sources, object files, binaries, editor swap files, and outputs are checked in.
+- No automated test runner or CI configuration is provided; sample `.tc`, `.ic`, and `.spim` files are the available fixtures.
+- A license exists only inside `target-code-generation/`; the repository root does not define one license for both snapshots.

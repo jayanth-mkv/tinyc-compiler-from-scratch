@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">TinyC Compiler from Scratch cover</title>
+  <desc id="desc">An editorial compiler construction cover showing source grammar branching into intermediate and SPIM target code.</desc>
+  <rect width="1200" height="630" fill="#f4f0e6"/>
+  <rect x="60" y="54" width="1080" height="522" rx="24" fill="none" stroke="#c9c0ae" stroke-width="2"/>
+  <text x="98" y="112" font-family="Consolas,monospace" font-size="16" letter-spacing="3" fill="#a75b42">COMPILER CONSTRUCTION / SOURCE ARCHIVE</text>
+  <text x="96" y="212" font-family="Georgia,serif" font-size="78" font-weight="700" fill="#29251f">TinyC Compiler</text>
+  <text x="100" y="272" font-family="Georgia,serif" font-size="45" fill="#29251f">from scratch</text>
+  <text x="101" y="333" font-family="Segoe UI,Arial,sans-serif" font-size="25" fill="#5f594f">Trace a small C-like language from tokens to code.</text>
+  <path d="M100 380h575" stroke="#a75b42" stroke-width="5"/>
+  <text x="100" y="430" font-family="Consolas,monospace" font-size="17" fill="#766e61">LEX → YACC → AST + SYMBOLS → IR / SPIM</text>
+  <text x="100" y="512" font-family="Segoe UI,Arial,sans-serif" font-size="16" fill="#766e61">Two independent snapshots · checked-in generated artifacts · Unix-oriented makefiles</text>
+
+  <g transform="translate(790 118)">
+    <rect width="270" height="350" rx="24" fill="#29251f"/>
+    <text x="31" y="51" font-family="Consolas,monospace" font-size="15" fill="#d2aa58">int main() {</text>
+    <circle cx="135" cy="112" r="20" fill="#a75b42"/>
+    <circle cx="82" cy="180" r="17" fill="#d2aa58"/>
+    <circle cx="188" cy="180" r="17" fill="#d2aa58"/>
+    <path d="M122 128l-30 37M148 128l30 37M82 197v26M188 197v26" stroke="#f4f0e6" stroke-width="7" stroke-linecap="round"/>
+    <path d="M49 243h172M49 272h131M49 301h155" stroke="#c9c0ae" stroke-width="10" stroke-linecap="round"/>
+    <text x="31" y="334" font-family="Consolas,monospace" font-size="15" fill="#d2aa58">}</text>
+  </g>
+</svg>

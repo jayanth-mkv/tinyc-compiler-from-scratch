@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">TinyC compiler icon</title>
+  <desc id="desc">A compact syntax tree descending into assembly instruction lines.</desc>
+  <rect width="256" height="256" rx="48" fill="#f4f0e6"/>
+  <rect x="34" y="30" width="188" height="196" rx="24" fill="#29251f"/>
+  <circle cx="128" cy="70" r="18" fill="#a75b42"/>
+  <circle cx="82" cy="125" r="15" fill="#d2aa58"/>
+  <circle cx="174" cy="125" r="15" fill="#d2aa58"/>
+  <path d="M116 83l-25 29M140 83l25 29M82 140v18M174 140v18" stroke="#f4f0e6" stroke-width="6" stroke-linecap="round"/>
+  <path d="M65 170h126M65 190h92" stroke="#c9c0ae" stroke-width="9" stroke-linecap="round"/>
+</svg>
